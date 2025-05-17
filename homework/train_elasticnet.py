@@ -14,9 +14,10 @@ from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 
-from homework.calculate_metrics import calculate_metrics
-from homework.prepare_data import prepare_data
-from homework.print_metrics import print_metrics
+from homework.src._internals import save_model_if_better
+from homework.src._internals.calculate_metrics import calculate_metrics
+from homework.src._internals.prepare_data import prepare_data
+from homework.src._internals.print_metrics import print_metrics
 
 x_train, x_test, y_train, y_test = prepare_data(
     file_path="data/winequality-red.csv",
@@ -35,4 +36,6 @@ print_metrics("Training metrics", mse, mae, r2)
 # Metricas de error durante testing
 mse, mae, r2 = calculate_metrics(estimator, x_test, y_test)
 print_metrics("Test metrics", mse, mae, r2)
+
+save_model_if_better(estimator, x_test, y_test)
 
